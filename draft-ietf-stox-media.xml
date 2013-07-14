@@ -199,7 +199,16 @@
         </section>
 
         <section title="ICE-UDP Transport Method" anchor="jingle-syntax-ice">
-          <t>A more advanced Jingle transport method for exchanging media over UDP is specified in <xref target='XEP-0176'/>.  Under ideal conditions this transport method provides NAT traversal by following the Interactive Connectivity Exchange methodology specified in <xref target='RFC5245'/>.  The relevant SDP mappings are provided in <xref target='XEP-0176'/>.</t>
+            <t>A more advanced Jingle transport method for exchanging media over UDP is specified in <xref target='XEP-0176'/>.  Under ideal conditions this transport method provides NAT traversal by following the Interactive Connectivity Exchange methodology specified in <xref target='RFC5245'/>.</t>
+            <t>The relevant SDP mappings are provided in <xref target='XEP-0176'/>, however there are a few syntax incompatibilities which need to be addressed by gateways conforming to this specification:</t>
+            <t>
+                <list style='symbols'>
+                    <t>The 'foundation' attribute is defined as a number in Jingle (unsigned byte) whereas in SIP it's defined as a string which can contain letters, digits and the '+' and '/' symbols. Applications SHOULD convert the foundation element to an integer number. The mechanism for such conversion is undefined.</t>
+                    <t>Jingle defines a 'generation' attribute which is used to determine if an ICE restart is required. Such attribute has no counterpart in SIP as ICE restarts are detected by detecting a change in the ICE ufrag and password.</t>
+                    <t>The 'id' attribute defined by Jingle has no SIP counterpart thus applications are free to choose means to generate unique identifiers across different candidates.</t>
+                    <t>The 'network' attribute defined by Jingle has no counterpart in SIP and SHOULD be ignored.</t>
+                </list>
+            </t>
         </section>
       </section>
 

@@ -429,6 +429,15 @@ Content-Length: 0
       <t>Detailed security considerations for session management are given for SIP in <xref target='RFC3261'/> and for XMPP in <xref target='XEP-0166'/> (see also <xref target='RFC6120'/>).</t>
     </section>
 
+    <section title="Open Issues" anchor="open-issues">
+        <t>
+            <list style='symbols'>
+                <t>Better text for OA compatibility section</t>
+                <t>Define how to handle session-info stanzas with 'active', 'hold' and 'mute' elements. Map that to SIP hold.</t>
+            </list>
+        </t>
+    </section>
+
     <section title='IANA Considerations' anchor="iana">
       <t>This document has no actions for the IANA.</t>
     </section>

@@ -89,6 +89,7 @@
       <section title="Compatibility with Offer-Answer model" anchor="jingle-oacompat">
           <t>Even if Jingle has meny similarities with the model used in SIP, there are some use cases that cannot be achieved the same way due to how the offer-answer model is used in SIP in conjustion with SDP.</t>
           <t>When using ICE transport, Jingle endpoints are capable of sending candidates in several transport-info meesages. Since there is no equivalent way to achieve that with SIP, <xref target='XEP-0176'/> defines an offer-answer support mode defined by the "urn:ietf:rfc:3264" feature tag. Implementations conforming to this specification MUST support offfer-answer model with Jingle.</t>
+          <t>If an implementation which conforms to this specification receives a transport-info message from a JIngle endpoint it MAY choose to ignore it or reply to it with an appropriate error.</t>
       </section>
 
       <section title="Syntax Mappings" anchor="jingle-syntax">
@@ -179,7 +180,7 @@
 +-------------------+-----------------+
 | session-terminate | BYE             |
 +-------------------+-----------------+
-| transport-info    | [varies]        |
+| transport-info    | unnused         |
 +-------------------+-----------------+
             ]]></artwork>
           </figure>

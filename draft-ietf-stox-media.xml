@@ -6,7 +6,7 @@
 <?rfc symrefs="yes"?>
 <?rfc toc="yes"?>
 <?rfc tocdepth="1"?>
-<rfc category='std' docName='draft-ietf-stox-media-00' ipr='trust200902'>
+<rfc category='std' docName='draft-ietf-stox-media-01' ipr='trust200902'>
 
   <front>
     <title abbrev="SIP-XMPP Interworking: Media Sessions">Interworking between the Session Initiation Protocol (SIP) and the Extensible Messaging and Presence Protocol (XMPP): Media Sessions</title>

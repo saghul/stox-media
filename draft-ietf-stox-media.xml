@@ -13,7 +13,8 @@
       between the Session Initiation Protocol (SIP) and the Extensible
       Messaging and Presence Protocol (XMPP): Media Sessions
     </title>
-    <author initials='P.' surname='Saint-Andre' fullname='Peter Saint-Andre'>
+    <author initials='P.' surname='Saint-Andre'
+            fullname='Peter Saint-Andre'>
       <organization>Cisco Systems, Inc.</organization>
       <address>
         <postal>
@@ -27,7 +28,8 @@
         <email>psaintan@cisco.com</email>
       </address>
     </author>
-    <author initials="S." surname="Ibarra" fullname="Saul Ibarra Corretge">
+    <author initials="S." surname="Ibarra"
+            fullname="Saul Ibarra Corretge">
       <organization>AG Projects</organization>
       <address>
         <postal>

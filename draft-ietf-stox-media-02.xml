@@ -108,6 +108,15 @@
         extensions.
       </t>
       <t>
+        It is important to note that SIP and Jingle sessions can be
+        gateway-ed in a rather simple fashion if all media was always
+        routed and potentially even transcoded in through a gateway.
+        This specification aims to define a mapping that goes beyond the
+        above and allows gateways to (wherever possible) only intervene
+        at the signalling level, letting user agents exchange media in
+        an end-to-end manner.
+      </t>
+      <t>
         The discussion venue for this document is the mailing list of
         the STOX WG; visit https://www.ietf.org/mailman/listinfo/stox
         for subscription information and discussion archives.
@@ -137,20 +146,42 @@
         in conjunction with SDP.
       </t>
       <t>
-
+        More specifically, mapping SIP and SDP Offer/Answer to XMPP is
+        often complicated due to the difference in how each handles
+        backward compatibility. Jingle, as most other XMPP extensions,
+        relies heavily on the protocol's advanced service discovery
+        [TODO:ref-disco] mechanisms. In other words, XMPP entities are
+        able to verify the capabilities of their intended peer before
+        actually attempting to establish a session with it.
       </t>
       <t>
-        When using ICE transport, Jingle endpoints are capable of
-        sending candidates in several transport-info meesages. Since
-        there is no equivalent way to achieve that with SIP,
-        <xref target='XEP-0176'/>
-        defines an Offer/Answer support mode defined by the
-        "urn:ietf:rfc:3264" feature tag. Implementations conforming to
-        this specification MUST support offfer-answer model with Jingle.
+        SDP Offer/Answer on the other hand uses a least common
+        denominator approach where every SDP offer has to be
+        understandable by legacy endpoints. Newer, unsupported aspects
+        in this offer can therefore only appear as optional or their use
+        be limited to subsequent Offer/Answer exchanges, once their
+        support has been confirmed.
       </t>
-      <t>If an implementation which conforms to this specification
-        receives a transport-info message from a Jingle endpoint it MAY
-        choose to ignore it or reply to it with an appropriate error.
+      <t>
+        Use of trickle ICE [TODO:ref-trickle-ice] is one example where
+        the issue occurs. SIP endpoints need to always behave as
+        vanilla ICE agents when sending their first offer and make sure
+        they gather all candidates before sending a SIP INVITE. This is
+        necessary because otherwise ICE agents with no support for
+        trickle can prematurely declare failure. Jingle endpoints, on
+        the other hand can verify support for trickle ICE prior to
+        engaging in a session and adapt their behaviour accordingly.
+      </t>
+      <t>
+        In order to work around such issues, <xref target='XEP-0176'/>
+        defines an Offer/Answer support mode through the
+        "urn:ietf:rfc:3264" feature tag. It indicates that a specific
+        XMPP entity can only be contacted through the use of
+        Offer/Answer semantics. Implementations conforming to
+        this specification MUST support Offer/Answer model with Jingle.
+        Note that such endpoints are not required to actually declare
+        support for this tag because this would mean that they too would
+        only be reachable through Offer/Answer semantics.
       </t>
     </section>
 

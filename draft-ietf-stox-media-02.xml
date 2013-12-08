@@ -9,11 +9,12 @@
 <rfc category='std' docName='draft-ietf-stox-media-01' ipr='trust200902'>
 
   <front>
-    <title abbrev="SIP-XMPP Interworking: Media Sessions">Interworking
-      between the Session Initiation Protocol (SIP) and the Extensible
-      Messaging and Presence Protocol (XMPP): Media Sessions
+    <title abbrev="SIP-XMPP Interworking: Media Sessions">
+      Interworking between the Session Initiation Protocol (SIP) and the
+      Extensible Messaging and Presence Protocol (XMPP): Media Sessions.
     </title>
-    <author initials='P.' surname='Saint-Andre' fullname='Peter Saint-Andre'>
+    <author initials='P.' surname='Saint-Andre'
+            fullname='Peter Saint-Andre'>
       <organization>Cisco Systems, Inc.</organization>
       <address>
         <postal>
@@ -27,7 +28,8 @@
         <email>psaintan@cisco.com</email>
       </address>
     </author>
-    <author initials="S." surname="Ibarra" fullname="Saul Ibarra Corretge">
+    <author initials="S." surname="Ibarra"
+            fullname="Saul Ibarra Corretge">
       <organization>AG Projects</organization>
       <address>
         <postal>
@@ -58,7 +60,8 @@
     <keyword>XMPP</keyword>
     <keyword>Jingle</keyword>
     <abstract>
-      <t>This document defines a bi-directional protocol mapping for use
+      <t>
+        This document defines a bi-directional protocol mapping for use
         by gateways that enable the exchange of media signalling
         messages between systems that implement the Jingle extensions to
         the Extensible Messaging and Presence Protocol (XMPP) and those
@@ -70,17 +73,19 @@
   <middle>
 
     <section title="Introduction" anchor="intro">
-      <t>The Session Initiation Protocol
-        <xref target="RFC3261"/>
+      <t>
+        The Session Initiation Protocol <xref target="RFC3261"/>
         is a widely-deployed technology for the management of media
-        sessions (such as voice calls) over the Internet. SIP itself
-        provides a signalling channel (typically via the User Datagram
-        Protocol<xref target='RFC768'/>), over which two or more parties
-        can exchange messages for the purpose of negotiating a media
-        session that uses a dedicated media channel such as the
-        Real-time Transport Protocol<xref target='RFC3550'/>.
+        sessions (such as voice and video calls) over the Internet. SIP
+        itself provides a signalling channel (sometimes via the User
+        Datagram Protocol<xref target='RFC768'/>), over which two or
+        more parties can exchange messages for the purpose of
+        negotiating a media session that uses a dedicated media channel
+        such as the Real-time Transport Protocol
+        <xref target='RFC3550'/>.
       </t>
-      <t>The Extensible Messaging and Presence Protocol
+      <t>
+        The Extensible Messaging and Presence Protocol (XMPP)
         <xref target='RFC6120'/>
         also provides a signalling channel, typically via the
         Transmission Control Protocol<xref target='RFC793'/>. Given the
@@ -90,7 +95,8 @@
         clients have defined an XMPP-specific negotiation protocol
         called Jingle<xref target='XEP-0166'/>.
       </t>
-      <t>However, Jingle was designed to easily map to SIP for
+      <t>
+        However, Jingle was designed to easily map to SIP for
         communication through gateways or other transformation
         mechanisms. Therefore, consistent with existing specifications
         for mapping between SIP and XMPP (see
@@ -101,7 +107,8 @@
         implement SIP and those that implement the XMPP Jingle
         extensions.
       </t>
-      <t>The discussion venue for this document is the mailing list of
+      <t>
+        The discussion venue for this document is the mailing list of
         the STOX WG; visit https://www.ietf.org/mailman/listinfo/stox
         for subscription information and discussion archives.
       </t>
@@ -113,24 +120,31 @@
         "MAY", and "OPTIONAL" in this document are to be interpreted as
         described in<xref target='RFC2119'/>.
       </t>
-      <t>A number of technical terms used here are defined in
+      <t>
+        A number of technical terms used here are defined in
         <xref target="RFC3261"/>,<xref target="RFC6120"/>,
         <xref target='XEP-0166'/>, and<xref target='XEP-0167'/>. The
         term "JID" is short for "Jabber Identifier".
       </t>
     </section>
 
-    <section title="Compatibility with Offer-Answer model" anchor="jingle-oacompat">
-      <t>Even if Jingle has meny similarities with the model used in
-        SIP, there are some use cases that cannot be achieved the same
-        way due to how the offer-answer model is used in SIP in
-        conjustion with SDP.
+    <section title="Compatibility with Offer/Answer model"
+             anchor="jingle-oacompat">
+      <t>
+        Even if Jingle semantics have many similarities with those used
+        in SIP, there are some use cases that cannot be handled in
+        exactly the same way due to the Offer/Answer model used in SIP
+        in conjunction with SDP.
       </t>
-      <t>When using ICE transport, Jingle endpoints are capable of
+      <t>
+
+      </t>
+      <t>
+        When using ICE transport, Jingle endpoints are capable of
         sending candidates in several transport-info meesages. Since
         there is no equivalent way to achieve that with SIP,
         <xref target='XEP-0176'/>
-        defines an offer-answer support mode defined by the
+        defines an Offer/Answer support mode defined by the
         "urn:ietf:rfc:3264" feature tag. Implementations conforming to
         this specification MUST support offfer-answer model with Jingle.
       </t>

@@ -188,7 +188,8 @@
     <section title="Jingle to SIP" anchor="jingle">
 
       <section title="Overview" anchor="jingle-overview">
-        <t>As mentioned, Jingle was designed in part to enable
+        <t>
+          As mentioned, Jingle was designed in part to enable
           straightforward protocol mapping between XMPP and SIP.
           However, given the significantly different technology
           assumptions underlying XMPP and SIP, Jingle is naturally
@@ -196,13 +197,15 @@
         </t>
         <t>
           <list style='symbols'>
-            <t>Base SIP messages and headers use a plaintext format
+            <t>
+              Base SIP messages and headers use a plaintext format
               similar in some ways to the Hypertext Transport Protocol
               <xref target='RFC2616'/>, whereas Jingle messages are pure
               XML. Mappings between SIP headers and Jingle message
               syntax are provided below.
             </t>
-            <t>The SIP payloads defining session semantics use the
+            <t>
+              The SIP payloads defining session semantics use the
               Session Description Protocol<xref target='RFC4566'/>,
               whereas the equivalent Jingle payloads are defined as XML
               child elements of the Jingle &lt;content/&gt; element.
@@ -210,7 +213,8 @@
               elements specify mappings to SDP for all Jingle syntax,
               making the mapping relatively straightforward.
             </t>
-            <t>The SIP signalling channel has traditionally been
+            <t>
+              The SIP signalling channel has historically often been
               transported over UDP, whereas the signalling channel for
               Jingle is XMPP over TCP. Mapping between the transport
               layers typically happens within a gateway using techniques
@@ -223,7 +227,8 @@
 
       <section title="Syntax Mappings" anchor="jingle-syntax">
         <section title="Generic Jingle Syntax" anchor="jingle-syntax-generic">
-          <t>Jingle is designed in a modular fashion, so that session
+          <t>
+            Jingle is designed in a modular fashion, so that session
             description data is generally carried in a payload within
             the generic Jingle elements, i.e., the &lt;jingle/&gt;
             element and its &lt;content/&gt; child. The following
@@ -291,7 +296,7 @@
 +--------------------------------+--------------------------------+
 | <jingle/> 'responder'          | [ no mapping ]                 |
 +--------------------------------+--------------------------------+
-| <jingle/> 'sid'                | local-part of Call-ID          |
+| <jingle/> 'sid'                | local-part of Dialog ID        |
 +--------------------------------+--------------------------------+
 | local-part of 'initiator'      | <username> in SDP o= line      |
 +--------------------------------+--------------------------------+
@@ -306,7 +311,8 @@
 +--------------------------------+--------------------------------+
             ]]></artwork>
           </figure>
-          <t>The 'senders' attribute is optional in Jingle, thus in case
+          <t>
+            The 'senders' attribute is optional in Jingle, thus in case
             it's absent it's RECOMMENDED that the direction value is
             considered as 'sendrecv'.
           </t>
@@ -344,82 +350,96 @@
           </figure>
         </section>
 
-        <section title="Audio Application Format" anchor="jingle-syntax-audio">
-          <t>A Jingle application format for audio exchange via RTP is
-            specified in<xref target='XEP-0167'/>. This application
+        <section title="Audio Application Format"
+                 anchor="jingle-syntax-audio">
+          <t>
+            A Jingle application format for audio exchange via RTP is
+            specified in <xref target='XEP-0167'/>. This application
             format effectively maps to the "RTP/AVP" profile specified
-            in
-            <xref target='RFC3551'/>
-            and the "RTP/SAVP" profile specified in RFC3711, where the
-            media type is "audio" and the specific mappings to SDP
-            syntax are provided in<xref target='XEP-0167'/>. As stated
-            in
-            <xref target='XEP-0167'/>
-            future versions of this specification might define how to
-            use other RTP profiles such as "RTP/AVPF" and "RTP/SAVPF" as
-            fedined in RFC4585 and RFC5124 respectively.
+            in <xref target='RFC3551'/> and the "RTP/SAVP" profile
+            specified in RFC3711, where the media type is "audio" and
+            the specific mappings to SDP syntax are provided in
+            <xref target='XEP-0167'/>. As stated in
+            <xref target='XEP-0167'/> future versions of this
+            specification might define how to use other RTP profiles
+            such as "RTP/AVPF" and "RTP/SAVPF" as defined in RFC4585 and
+            RFC5124 respectively.
           </t>
         </section>
 
-        <section title="Video Application Format" anchor="jingle-syntax-video">
-          <t>A Jingle application format for video exchange via RTP is
-            specified in<xref target='XEP-0167'/>. This application
+        <section title="Video Application Format"
+                 anchor="jingle-syntax-video">
+          <t>
+            A Jingle application format for video exchange via RTP is
+            specified in <xref target='XEP-0167'/>. This application
             format effectively maps to the "RTP/AVP" profile specified
-            in
-            <xref target='RFC3551'/>
-            and the "RTP/SAVP" profile specified in RFC3711, where the
-            media type is "audio" and the specific mappings to SDP
-            syntax are provided in<xref target='XEP-0167'/>. As stated
-            in
-            <xref target='XEP-0167'/>
-            future versions of this specification might define how to
-            use other RTP profiles such as "RTP/AVPF" and "RTP/SAVPF" as
-            fedined in RFC4585 and RFC5124 respectively.
+            in <xref target='RFC3551'/> and the "RTP/SAVP" profile
+            specified in RFC3711, where the media type is "audio" and
+            the specific mappings to SDP syntax are provided in
+            <xref target='XEP-0167'/>. As stated in
+            <xref target='XEP-0167'/> future versions of this
+            specification might define how to use other RTP profiles
+            such as "RTP/AVPF" and "RTP/SAVPF" as defined in RFC4585 and
+            RFC5124 respectively.
           </t>
         </section>
 
-        <section title="Raw UDP Transport Method" anchor="jingle-syntax-udp">
-          <t>A basic Jingle transport method for exchanging media over
-            UDP is specified in<xref target='XEP-0177'/>. This transport
+        <section title="Raw UDP Transport Method"
+                 anchor="jingle-syntax-udp">
+          <t>
+            A basic Jingle transport method for exchanging media over
+            UDP is specified in <xref target='XEP-0177'/>. This transport
             method involves the negotiation of an IP address and port
-            only, and does not provide NAT traversal. The Jingle 'ip'
-            attribute maps to the connection-address parameter of the
-            SDP c= line and the 'port' attribute maps to the port
-            parameter of the SDP m= line.
+            only. It does not provide NAT traversal, effectively leaving
+            the task to intermediary entries. The Jingle 'ip' attribute
+            maps to the connection-address parameter of the SDP c= line
+            and the 'port' attribute maps to the port parameter of the
+            SDP m= line. Use of SIP without ICE would generally map to
+            use of Raw UDP on the XMPP side of a session.
           </t>
         </section>
 
-        <section title="ICE-UDP Transport Method" anchor="jingle-syntax-ice">
-          <t>A more advanced Jingle transport method for exchanging
-            media over UDP is specified in<xref target='XEP-0176'/>.
+        <section title="ICE-UDP Transport Method"
+                 anchor="jingle-syntax-ice">
+          <t>
+            A more advanced Jingle transport method for exchanging
+            media over UDP is specified in <xref target='XEP-0176'/>.
             Under ideal conditions this transport method provides NAT
             traversal by following the Interactive Connectivity Exchange
-            methodology specified in<xref target='RFC5245'/>.
+            methodology specified in <xref target='RFC5245'/>.
           </t>
-          <t>The relevant SDP mappings are provided in
+          <t>
+            The relevant SDP mappings are provided in
             <xref target='XEP-0176'/>, however there are a few syntax
             incompatibilities which need to be addressed by gateways
             conforming to this specification:
           </t>
           <t>
             <list style='symbols'>
-              <t>The 'foundation' attribute is defined as a number in
-                Jingle (unsigned byte) whereas in SIP it's defined as a
-                string which can contain letters, digits and the '+' and
-                '/' symbols. Applications SHOULD convert the foundation
-                element to an integer number. The mechanism for such
+              <t>
+                The 'foundation' attribute is defined as a number in
+                Jingle (unsigned byte) whereas ICE
+                <xref target='RFC5245'/> defines it as a string, which
+                can contain letters, digits and the '+' and '/' symbols.
+                Gateway applications MUST therefore convert ICE
+                originating foundations into integer numbers and they
+                MUST guarantee that such a conversion preserves
+                foundation uniqueness. The exact mechanism for the
                 conversion is undefined.
               </t>
-              <t>Jingle defines a 'generation' attribute which is used
+              <t>
+                Jingle defines a 'generation' attribute which is used
                 to determine if an ICE restart is required. Such
                 attribute has no counterpart in SIP as ICE restarts are
                 detected by detecting a change in the ICE ufrag and
-                password.
+                password. Gateways MUST therefore increase the
+                generation number when they detect such changes.
               </t>
-              <t>The 'id' attribute defined by Jingle has no SIP
+              <t>
+                The 'id' attribute defined by Jingle has no SIP
                 counterpart thus applications are free to choose means
-                to generate unique identifiers across different
-                candidates.
+                to generate unique identifiers across the different
+                candidates of an ICE generation.
               </t>
               <t>The 'network' attribute defined by Jingle has no
                 counterpart in SIP and SHOULD be ignored.
@@ -430,14 +450,17 @@
       </section>
 
       <section title="Sample Scenarios" anchor="jingle-scenarios">
-        <t>The following sections provide sample scenarios (or "call
+        <t>
+          The following sections provide sample scenarios (or "call
           flows") that illustrate the principles of interworking from
           Jingle to SIP. These scenarios are not exhaustive.
         </t>
 
-        <section title="Basic Voice Chat" anchor="jingle-scenarios-basic">
-          <t>The protocol flow for a basic voice chat for which an XMPP
-            user (juliet@example.com) is the iniator and a SIP user
+        <section title="Basic Voice Chat"
+                 anchor="jingle-scenarios-basic">
+          <t>
+            The protocol flow for a basic voice chat for which an XMPP
+            user (juliet@example.com) is the initiator and a SIP user
             (romeo@example.net) is the responder. The voice chat is
             consummated through a gateway. To simplify the example, the
             transport method negotiated is "raw user datagram protocol"

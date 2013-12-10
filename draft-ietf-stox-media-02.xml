@@ -513,6 +513,94 @@
         forwarded to the Jingle endpoint.
       </t>
     </section>
+    
+    <section title="Detecting endless loops" anchor="loops">
+      <t>
+        <xref target="RFC3261"/> defines a "Max-Forwards" header that
+        allows intermediate entities such as SIP proxies to detect and
+        prevent loops from occurring. The specifics of XMPP make such
+        a prevention mechanism unnecessary for XMPP-only environments.
+        With the introduction of SIP-to-XMPP gatewaying however, it
+        would be possible for loops to occur where messages are being
+        repeatedly forwarded from XMPP to SIP to XMPP to SIP, etc.
+      </t>
+      <t>
+        To compensate for the lack of a "Max-Forwards" header in SIP,
+        gateways MUST therefore keep track of all SIP transactions and
+        Jingle sessions that they are currently serving and they MUST
+        block re-entrant messages.
+      </t>
+      <t>
+        [EMIL, TODO: in order for this to work we need a consistent way
+        of translating dialog id-s into jingle sessions, and vice versa,
+        so that the following can be verified:
+          jingleSessID == toJingleSessID(toSipCallID( jingleSessID ))
+        are we doing that in some of the core specs]
+      </t>
+    </section>
+    <section title="SDP format specific parameters" anchor="fmtp">
+      <t>
+        <xref target="RFC4566"/> defines "a=fmtp" attributes for the
+        transmission of format specific parameters as a single
+        transparent string. Such strings can be used to convey either a
+        single value or a sequence of parameters, separated by
+        semi-colons, comas or whatever delimiters are chosen by a
+        particular payload type specification.
+      </t>
+      <t>
+        <xref target="XEP-0177"/> on the other hand defines a
+        "&lt;format/&gt;" element as follows:
+        <figure>
+          <artwork><![CDATA[
+  <format name="paramName" value="paramValue"/>
+          ]]></artwork>
+        </figure>
+        A sequence of parameters is thus transmitted as an array of
+        distinctive name/value couples.
+      </t>
+      <t>
+        These differences make it impossible to devise a generic
+        mechanism that accurately translates format parameters from
+        Jingle to SDP without the specifics of the payload being known
+        to the gateway. This specification therefore makes the following
+        recommendations for a best-effort attempt at translation:
+      </t>
+      <t>
+        <list style='numbers'>
+          <t>
+            Gateways that are aware of the formats in use SHOULD parse
+            all format parameters and generate "&lt;format/&gt;" arrays
+            and "a=fmtp" values accordingly.
+          </t>
+          <t>
+            When translating Jingle to SIP, gateways that have no
+            explicit support for the formats that are being negotiated,
+            SHOULD convert the list of "&lt;format/&gt;" elements into
+            a single string, containing a sequence of "name=value"
+            pairs, separated by a semi-colon and a space (i.e. "; ").
+          </t>
+          <t>
+            When translating SIP to Jingle, gateways that have no
+            explicit support for the formats that are being negotiated,
+            SHOULD tokenize the "a=fmtp" format string using the
+            following list of delimiters: ";", "; ", ",", ", ". The
+            resulting tokens should then be parsed as "name=value"
+            pairs. If this process does actually yield any such pairs,
+            they SHOULD be used for generating the respective
+            "&lt;format/&gt;" elements. If some of the tokens cannot be
+            parsed into a "name=value" pair, or in case the format
+            string couldn't be tokenized with the above delimiters, the
+            remaining brute strings SHOULD be used as a value for the
+            "name" attribute of the "&lt;format/&gt;" element and their
+            corresponding "value" element SHOULD be left empty.
+          </t>
+        </list>
+      </t>
+      <t>
+        [EMIL, TODO: examples for the above transformations]
+      </t>
+    </section>
+
 
     <section title="Dialog forking" anchor="forking">
       <t>

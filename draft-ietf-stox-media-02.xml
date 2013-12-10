@@ -514,6 +514,26 @@
       </t>
     </section>
 
+    <section title="Dialog forking" anchor="forking">
+      <t>
+        <xref target="RFC3261"/> defines semantics for dialog forking.
+        Such semantics have not been defined for Jingle and need to be
+        hidden from XMPP endpoints.
+      </t>
+      <t>
+        To achieve this SIP-to-XMPP MUST NOT forward more than
+        one provisional response on their Jingle side. Typically they
+        would do so only for the first provisional response they receive
+        and ignore the rest. This provisional response SHOULD be
+        forwarded as originating from a bare Jabber ID (JID)
+        corresponding to the AOR URI found in the "From" header of the
+        SIP provisional response. The gateway MUST NOT attempt to
+        translate GRUUs into full JIDs because it cannot know at this
+        stage, which of the dialogs established by these provisional
+        responses will be used for the actual session.
+      </t>
+    </section>
+
     <section title="Sample Scenarios" anchor="jingle-scenarios">
       <t>
         The following sections provide sample scenarios (or "call

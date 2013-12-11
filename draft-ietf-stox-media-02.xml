@@ -488,14 +488,14 @@
     </section>
     <section title="Early media" anchor="early-media">
       <t>
-        <xref target="RFC3959"/> and <xref target="RFC3960"/> describes
+        <xref target="RFC3959"/> and <xref target="RFC3960"/> describe
         a number of scenarios relying on "early media". While similar
         attempts have also been made for XMPP <xref target="XEP-0269"/>
         support for early media is not currently widely supported in
         Jingle implementations. Therefore, gateways SHOULD NOT forward
         SDP answers from SIP to Jingle until a final response has been
         received, except in cases where the gateway is in a position to
-        confirm support for solution specific support for early media
+        confirm specific support for early media
         by the endpoint (e.g. <xref target="XEP-0269"/>).
       </t>
       <t>

@@ -501,6 +501,9 @@
         a subsequent final response may follow without an actual answer
         and the one from the provisional response will need to be
         forwarded to the Jingle endpoint.
+
+        TODO (saghuL): do we need to mention double hold here? That is, when
+        you put me on hold after I did it first. Direction would then be "inactive".
       </t>
     </section>
     

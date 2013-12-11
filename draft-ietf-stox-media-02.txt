@@ -5,10 +5,10 @@
 Network Working Group                                     P. Saint-Andre
 Internet-Draft                                       Cisco Systems, Inc.
 Intended status: Standards Track                               S. Ibarra
-Expires: June 13, 2014                                       AG Projects
+Expires: June 14, 2014                                       AG Projects
                                                                  E. Ivov
                                                                    Jitsi
-                                                       December 10, 2013
+                                                       December 11, 2013
 
 
    Interworking between the Session Initiation Protocol (SIP) and the
@@ -38,7 +38,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 13, 2014.
+   This Internet-Draft will expire on June 14, 2014.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 1]
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 1]
 
 Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
@@ -70,17 +70,16 @@ Table of Contents
    3.  Compatibility with Offer/Answer model . . . . . . . . . . . .   3
    4.  Overview  . . . . . . . . . . . . . . . . . . . . . . . . . .   4
    5.  Syntax Mappings . . . . . . . . . . . . . . . . . . . . . . .   5
-   6.  Call Hold . . . . . . . . . . . . . . . . . . . . . . . . . .   8
-   7.  Early media . . . . . . . . . . . . . . . . . . . . . . . . .   9
-   8.  Detecting endless loops . . . . . . . . . . . . . . . . . . .   9
-   9.  SDP format specific parameters  . . . . . . . . . . . . . . .  10
-   10. Dialog forking  . . . . . . . . . . . . . . . . . . . . . . .  11
-   11. Sample Scenarios  . . . . . . . . . . . . . . . . . . . . . .  11
-   12. Security Considerations . . . . . . . . . . . . . . . . . . .  16
-   13. Open Issues . . . . . . . . . . . . . . . . . . . . . . . . .  16
-   14. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  16
-   15. References  . . . . . . . . . . . . . . . . . . . . . . . . .  16
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  18
+   6.  Call Hold . . . . . . . . . . . . . . . . . . . . . . . . . .   9
+   7.  Early media . . . . . . . . . . . . . . . . . . . . . . . . .  10
+   8.  Detecting endless loops . . . . . . . . . . . . . . . . . . .  10
+   9.  SDP format specific parameters  . . . . . . . . . . . . . . .  11
+   10. Dialog forking  . . . . . . . . . . . . . . . . . . . . . . .  12
+   11. Sample Scenarios  . . . . . . . . . . . . . . . . . . . . . .  12
+   12. Security Considerations . . . . . . . . . . . . . . . . . . .  18
+   13. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  18
+   14. References  . . . . . . . . . . . . . . . . . . . . . . . . .  18
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  20
 
 1.  Introduction
 
@@ -100,20 +99,27 @@ Table of Contents
    capabilities to XMPP clients have defined an XMPP-specific
    negotiation protocol called Jingle[XEP-0166].
 
+
+
+
+
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 2]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
+
    However, Jingle was designed to easily map to SIP for communication
    through gateways or other transformation mechanisms.  Therefore,
    consistent with existing specifications for mapping between SIP and
    XMPP (see [I-D.ietf-stox-core] and other related specifications),
    this document describes a bi-directional protocol mapping for use by
    gateways that enable the exchange of media signalling messages
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 2]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
-
    between systems that implement SIP and those that implement the XMPP
    Jingle extensions.
 
@@ -126,7 +132,7 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    Such gateways would likely focus on handling handling RTP session
    establishment and control within the context of what users would
    perceive as "calls".  This document is hence primarily dealing with
-   calling scenarios as opposed to generic media transfer with SIP.
+   calling scenarios as opposed to generic media sessions with SIP.
 
    The discussion venue for this document is the mailing list of the
    STOX WG; visit https://www.ietf.org/mailman/listinfo/stox for
@@ -150,13 +156,6 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    same way due to the Offer/Answer model used in SIP in conjunction
    with SDP.
 
-   More specifically, mapping SIP and SDP Offer/Answer to XMPP is often
-   complicated due to the difference in how each handles backward
-   compatibility.  Jingle, as most other XMPP extensions, relies heavily
-   on the protocol's advanced service discovery [TODO:ref-disco]
-   mechanisms.  In other words, XMPP entities are able to verify the
-   capabilities of their intended peer before actually attempting to
-   establish a session with it.
 
 
 
@@ -165,10 +164,19 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
 
 
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 3]
+
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 3]
 
 Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
+
+   More specifically, mapping SIP and SDP Offer/Answer to XMPP is often
+   complicated due to the difference in how each handles backward
+   compatibility.  Jingle, as most other XMPP extensions, relies heavily
+   on the protocol's advanced service discovery [XEP-0030] mechanisms.
+   In other words, XMPP entities are able to verify the capabilities of
+   their intended peer before actually attempting to establish a session
+   with it.
 
    SDP Offer/Answer on the other hand uses a least common denominator
    approach where every SDP offer has to be understandable by legacy
@@ -210,21 +218,17 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    o  The SIP payloads defining session semantics use the Session
       Description Protocol[RFC4566], whereas the equivalent Jingle
       payloads are defined as XML child elements of the Jingle <content/
-      > element.  However, the Jingle specifications defining such child
-      elements specify mappings to SDP for all Jingle syntax, making the
-      mapping relatively straightforward.
 
 
 
-
-
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 4]
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 4]
 
 Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
+
+      > element.  However, the Jingle specifications defining such child
+      elements specify mappings to SDP for all Jingle syntax, making the
+      mapping relatively straightforward.
 
    o  The SIP signalling channel has historically often been transported
       over UDP, whereas the signalling channel for Jingle is XMPP over
@@ -242,6 +246,41 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    following example illustrates this structure, where the XMPP stanza
    is a request to initiate an audio session using RTP over a raw UDP
    transport.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 5]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
 
    <iq from='romeo@example.net/v3rsch1kk3l1jk'
      id='ne91v36s'
@@ -274,14 +313,6 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
    In the foregoing example, the syntax and semantics of the <jingle/>
    and <content/> elements are defined in [XEP-0166], the syntax and
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 5]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
-
    semantics of the <description/> element are defined in [XEP-0167],
    and the syntax and semantics of the <transport/> element are defined
    in [XEP-0177].  Other <description/> elements are defined in
@@ -291,6 +322,21 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    example[XEP-0176], which defines an XMPP profile of[RFC5245]).
 
    At the core Jingle layer, the following mappings are defined.
+
+
+
+
+
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 6]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
 
    +--------------------------------+--------------------------------+
    |           Jingle               |             SIP                |
@@ -323,6 +369,31 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    values.  In general they should be mapped as shown in the following
    table, with some exceptions as described herein.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 7]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
+
    +-------------------+-----------------+
    | Jingle Action     | SIP Method      |
    +-------------------+-----------------+
@@ -330,14 +401,6 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    |                   | (1xx or 2xx)    |
    +-------------------+-----------------+
    | content-add       | INVITE request  |
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 6]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
-
    +-------------------+-----------------+
    | content-modify    | INVITE request  |
    +-------------------+-----------------+
@@ -355,44 +418,20 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    | transport-info    | unnused         |
    +-------------------+-----------------+
 
-5.2.  Audio Application Format
+5.2.  Application Formats
 
-   A Jingle application format for audio exchange via RTP is specified
-   in [XEP-0167].  This application format effectively maps to the "RTP/
-   AVP" profile specified in [RFC3551] and the "RTP/SAVP" profile
-   specified in RFC3711, where the media type is "audio" and the
-   specific mappings to SDP syntax are provided in [XEP-0167].  As
-   stated in [XEP-0167] future versions of this specification might
+   Jingle application formats for audio and video exchange via RTP are
+   specified in [XEP-0167].  These application formats effectively maps
+   to the "RTP/AVP" profile specified in [RFC3551] and the "RTP/SAVP"
+   profile specified in [RFC3711], where the media types are "audio" and
+   "video", and the specific mappings to SDP syntax are provided in
+   [XEP-0167].
+
+   As stated in [XEP-0167] future versions of this specification might
    define how to use other RTP profiles such as "RTP/AVPF" and "RTP/
    SAVPF" as defined in RFC4585 and RFC5124 respectively.
 
-5.3.  Video Application Format
-
-   A Jingle application format for video exchange via RTP is specified
-   in [XEP-0167].  This application format effectively maps to the "RTP/
-   AVP" profile specified in [RFC3551] and the "RTP/SAVP" profile
-   specified in RFC3711, where the media type is "audio" and the
-   specific mappings to SDP syntax are provided in [XEP-0167].  As
-   stated in [XEP-0167] future versions of this specification might
-   define how to use other RTP profiles such as "RTP/AVPF" and "RTP/
-   SAVPF" as defined in RFC4585 and RFC5124 respectively.
-
-5.4.  Raw UDP Transport Method
-
-
-
-
-
-
-
-
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 7]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
+5.3.  Raw UDP Transport Method
 
    A basic Jingle transport method for exchanging media over UDP is
    specified in [XEP-0177].  This transport method involves the
@@ -403,7 +442,15 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    the SDP m= line.  Use of SIP without ICE would generally map to use
    of Raw UDP on the XMPP side of a session.
 
-5.5.  ICE-UDP Transport Method
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 8]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
+
+5.4.  ICE-UDP Transport Method
 
    A more advanced Jingle transport method for exchanging media over UDP
    is specified in [XEP-0176].  Under ideal conditions this transport
@@ -443,16 +490,21 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    supported by Jingle through the "senders" element and its "initiator"
    and "responder" values.
 
-
-
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 8]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
+                 TODO
 
    In addition to these semantics however Jingle also defines a more
    concise way for achieving the same, which consists in sending a
    "hold" command within a "session-info" action:
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                 [Page 9]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
 
    <iq from='juliet@capulet.lit/balcony'
        id='xv39z423'
@@ -475,18 +527,20 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    this would not always be possible (e.g. when not all streams have the
    same direction).  Additionally such conversions might introduce
    complications in case further offers placing a session of hold also
-   contain other session modifications.
+   contain other session modifications.  TODO (saghuL): do we need to
+   mention double hold here?  That is, when you put me on hold after I
+   did it first.  Direction would then be "inactive".
 
 7.  Early media
 
-   [RFC3959] and [RFC3960] describes a number of scenarios relying on
+   [RFC3959] and [RFC3960] describe a number of scenarios relying on
    "early media".  While similar attempts have also been made for XMPP
    [XEP-0269] support for early media is not currently widely supported
    in Jingle implementations.  Therefore, gateways SHOULD NOT forward
    SDP answers from SIP to Jingle until a final response has been
    received, except in cases where the gateway is in a position to
-   confirm support for solution specific support for early media by the
-   endpoint (e.g. [XEP-0269]).
+   confirm specific support for early media by the endpoint (e.g.
+   [XEP-0269]).
 
    Gateways MUST however store early media SDP answers when they are
    sent inside a reliable provisional response.  In such cases, a
@@ -498,16 +552,16 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
    [RFC3261] defines a "Max-Forwards" header that allows intermediate
    entities such as SIP proxies to detect and prevent loops from
+   occurring.  The specifics of XMPP make such a prevention mechanism
+   unnecessary for XMPP-only environments.  With the introduction of
 
 
 
-Saint-Andre, et al.       Expires June 13, 2014                 [Page 9]
+Saint-Andre, et al.       Expires June 14, 2014                [Page 10]
 
 Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
 
-   occurring.  The specifics of XMPP make such a prevention mechanism
-   unnecessary for XMPP-only environments.  With the introduction of
    SIP-to-XMPP gatewaying however, it would be possible for loops to
    occur where messages are being repeatedly forwarded from XMPP to SIP
    to XMPP to SIP, etc.
@@ -521,7 +575,10 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    translating dialog id-s into jingle sessions, and vice versa, so that
    the following can be verified: jingleSessID ==
    toJingleSessID(toSipCallID( jingleSessID )) are we doing that in some
-   of the core specs]
+   of the core specs] TODO (saghul): we need to mention mention spirals
+   here as well.  Alice could call Bob, but Bob forwards his call to
+   Romeo.  A spiral on the SIP side could end up becoming a loop if the
+   gateway is in between.
 
 9.  SDP format specific parameters
 
@@ -534,7 +591,7 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    [XEP-0177] on the other hand defines a "<format/>" element as
    follows:
 
-   <format name="paramName" value="paramValue"/>
+     <format name="paramName" value="paramValue"/>
 
    A sequence of parameters is thus transmitted as an array of
    distinctive name/value couples.
@@ -549,18 +606,23 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
        format parameters and generate "<format/>" arrays and "a=fmtp"
        values accordingly.
 
+
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                [Page 11]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
+
    2.  When translating Jingle to SIP, gateways that have no explicit
        support for the formats that are being negotiated, SHOULD convert
        the list of "<format/>" elements into a single string, containing
        a sequence of "name=value" pairs, separated by a semi-colon and a
        space (i.e. "; ").
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                [Page 10]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
 
    3.  When translating SIP to Jingle, gateways that have no explicit
        support for the formats that are being negotiated, SHOULD
@@ -593,11 +655,24 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    cannot know at this stage, which of the dialogs established by these
    provisional responses will be used for the actual session.
 
+   Likewise, gateways conforming to this specification MUST NOT forward
+   more than a single final response received through SIP to the Jingle
+   side.  The gateway SHOULD terminate the SIP sessions whose received
+   final response wasn't forwarded to the Jingle side.
+
 11.  Sample Scenarios
 
    The following sections provide sample scenarios (or "call flows")
    that illustrate the principles of interworking from Jingle to SIP.
    These scenarios are not exhaustive.
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                [Page 12]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
 
 11.1.  Basic Voice Chat
 
@@ -607,94 +682,109 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    through a gateway.  To simplify the example, the transport method
    negotiated is "raw user datagram protocol" as specified in[XEP-0177].
 
-   INITIATOR  ...XMPP...   GATEWAY   ...SIP...    RESPONDER
-   |                        |                       |
-   | session-initiate       |                       |
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                [Page 11]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
-
-   |----------------------->|                       |
-   | IQ-result (ack)        |                       |
-   |<-----------------------|                       |
-   |                        | INVITE                |
-   |                        |---------------------->|
-   |                        | 180 Ringing           |
-   |                        |<----------------------|
-   | session-info (ringing) |                       |
-   |<-----------------------|                       |
-   | IQ-result (ack)        |                       |
-   |----------------------->|                       |
-   |                        | 200 OK                |
-   |                        |<----------------------|
-   | session-accept         |                       |
-   |<-----------------------|                       |
-   | IQ-result (ack)        |                       |
-   |----------------------->|                       |
-   |                        | ACK                   |
-   |                        |---------------------->|
-   |                   MEDIA SESSION                |
-   |<==============================================>|
-   |                        | BYE                   |
-   |                        |<----------------------|
-   | session-terminate      |                       |
-   |<-----------------------|                       |
-   | IQ-result (ack)        |                       |
-   |----------------------->|                       |
-   |                        | 200 OK                |
-   |                        |---------------------->|
-   |                        |                       |
+     INITIATOR  ...XMPP...   GATEWAY   ...SIP...    RESPONDER
+     |                        |                       |
+     | session-initiate       |                       |
+     |----------------------->|                       |
+     | IQ-result (ack)        |                       |
+     |<-----------------------|                       |
+     |                        | INVITE                |
+     |                        |---------------------->|
+     |                        | 180 Ringing           |
+     |                        |<----------------------|
+     | session-info (ringing) |                       |
+     |<-----------------------|                       |
+     | IQ-result (ack)        |                       |
+     |----------------------->|                       |
+     |                        | 200 OK                |
+     |                        |<----------------------|
+     | session-accept         |                       |
+     |<-----------------------|                       |
+     | IQ-result (ack)        |                       |
+     |----------------------->|                       |
+     |                        | ACK                   |
+     |                        |---------------------->|
+     |                   MEDIA SESSION                |
+     |<==============================================>|
+     |                        | BYE                   |
+     |                        |<----------------------|
+     | session-terminate      |                       |
+     |<-----------------------|                       |
+     | IQ-result (ack)        |                       |
+     |----------------------->|                       |
+     |                        | 200 OK                |
+     |                        |---------------------->|
+     |                        |                       |
 
    The packet flow is as follows.
 
    First the XMPP user sends a Jingle session-initiation request to the
    SIP user.
 
-   <iq from='juliet@example.com/t3hr0zny'
-     id='hu2s61f4'
-     from='romeo@example.net/v3rsch1kk3l1jk'
-     type='set'>
-   <jingle xmlns='urn:xmpp:jingle:1'
-           action='session-initiate'
-           initiator='juliet@example.com/t3hr0zny'
-           sid='a73sjjvkla37jfea'>
-     <content creator='initiator'
-              media='audio'
-              name='this-is-the-audio-content'>
-       <description xmlns='urn:xmpp:jingle:app:rtp:1'>
 
 
 
-Saint-Andre, et al.       Expires June 13, 2014                [Page 12]
+
+Saint-Andre, et al.       Expires June 14, 2014                [Page 13]
 
 Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
 
-         <payload-type id='96' name='speex' clockrate='16000'/>
-         <payload-type id='97' name='speex' clockrate='8000'/>
-         <payload-type id='18' name='G729'/>
-       </description>
-       <transport xmlns='urn:xmpp:jingle:transport:raw-udp'>
-         <candidate ip='192.0.2.101' port='49172' generation='0'/>
-       </transport>
-     </content>
-   </jingle>
-   </iq>
+     <iq from='juliet@example.com/t3hr0zny'
+       id='hu2s61f4'
+       from='romeo@example.net/v3rsch1kk3l1jk'
+       type='set'>
+     <jingle xmlns='urn:xmpp:jingle:1'
+             action='session-initiate'
+             initiator='juliet@example.com/t3hr0zny'
+             sid='a73sjjvkla37jfea'>
+       <content creator='initiator'
+                media='audio'
+                name='this-is-the-audio-content'>
+         <description xmlns='urn:xmpp:jingle:app:rtp:1'>
+           <payload-type id='96' name='speex' clockrate='16000'/>
+           <payload-type id='97' name='speex' clockrate='8000'/>
+           <payload-type id='18' name='G729'/>
+         </description>
+         <transport xmlns='urn:xmpp:jingle:transport:raw-udp'>
+           <candidate ip='192.0.2.101' port='49172' generation='0'/>
+         </transport>
+       </content>
+     </jingle>
+     </iq>
 
    The gateway returns an XMPP IQ-result to the initiator on behalf of
    the responder.
 
-   <iq from='juliet@example.com/t3hr0zny'
-     id='hu2s61f4'
-     to='romeo@example.net/v3rsch1kk3l1jk'
-     type='result'/>
+     <iq from='juliet@example.com/t3hr0zny'
+       id='hu2s61f4'
+       to='romeo@example.net/v3rsch1kk3l1jk'
+       type='result'/>
 
    The gateway transforms the Jingle session-initiate action into a SIP
    INVITE.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                [Page 14]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
 
      INVITE sip:romeo@example.net SIP/2.0
      Via: SIP/2.0/TCP client.example.com:5060;branch=z9hG4bK74bf9
@@ -719,106 +809,125 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
    The responder returns a SIP 180 Ringing message.
 
-   SIP/2.0 180 Ringing
-   Via: SIP/2.0/TCP client.example.com:5060;branch=z9hG4bK74bf9;received=192.0.2.101
-   From: Juliet Capulet <sip:juliet@example.com>;tag=t3hr0zny
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                [Page 13]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
-
-   To: Romeo Montague <sip:romeo@example.net>;tag=v3rsch1kk3l1jk
-   Call-ID: 3848276298220188511@example.com
-   CSeq: 1 INVITE
-   Contact: <sip:romeo@client.example.net;transport=tcp>
-   Content-Length: 0
+  SIP/2.0 180 Ringing
+  Via: SIP/2.0/TCP client.example.com:5060;branch=z9hG4bK74bf9;received=192.0.2.101
+  From: Juliet Capulet <sip:juliet@example.com>;tag=t3hr0zny
+  To: Romeo Montague <sip:romeo@example.net>;tag=v3rsch1kk3l1jk
+  Call-ID: 3848276298220188511@example.com
+  CSeq: 1 INVITE
+  Contact: <sip:romeo@client.example.net;transport=tcp>
+  Content-Length: 0
 
    The gateway transforms the ringing message into XMPP syntax.
 
-   <iq from='romeo@montague.net/v3rsch1kk3l1jk'
-     id='ol3ba71g'
-     to='juliet@example.com/t3hr0zny'
-     type='set'>
-   <jingle xmlns='urn:xmpp:jingle:1'
-           action='session-info'
-           initiator='juliet@example.com/t3hr0zny'
-           sid='a73sjjvkla37jfea'>
-     <ringing xmlns='urn:xmpp:jingle:apps:rtp:info:1'/>
-   </jingle>
-   </iq>
+     <iq from='romeo@montague.net/v3rsch1kk3l1jk'
+       id='ol3ba71g'
+       to='juliet@example.com/t3hr0zny'
+       type='set'>
+     <jingle xmlns='urn:xmpp:jingle:1'
+             action='session-info'
+             initiator='juliet@example.com/t3hr0zny'
+             sid='a73sjjvkla37jfea'>
+       <ringing xmlns='urn:xmpp:jingle:apps:rtp:info:1'/>
+     </jingle>
+     </iq>
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                [Page 15]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
 
    The initiator returns an IQ-result acknowledging receipt of the
    ringing message, which is used only by the gateway and not
    transformed into SIP syntax.
 
-   <iq from='juliet@example.com/t3hr0zny'
-     id='ol3ba71g'
-     to='romeo@example.net/v3rsch1kk3l1jk'
-     type='result'/>
+     <iq from='juliet@example.com/t3hr0zny'
+       id='ol3ba71g'
+       to='romeo@example.net/v3rsch1kk3l1jk'
+       type='result'/>
 
    The responder sends a SIP 200 OK to the initiator.
 
-     SIP/2.0 200 OK
-     Via: SIP/2.0/TCP client.example.com:5060;branch=z9hG4bK74bf9;received=192.0.2.101
-     From: Juliet Capulet <sip:juliet@example.com>;tag=t3hr0zny
-     To: Romeo Montague <sip:romeo@example.net>;tag=v3rsch1kk3l1jk
-     Call-ID: 3848276298220188511@example.com
-     CSeq: 1 INVITE
-     Contact: <sip:romeo@client.example.net;transport=tcp>
-     Content-Type: application/sdp
-     Content-Length: 147
+  SIP/2.0 200 OK
+  Via: SIP/2.0/TCP client.example.com:5060;branch=z9hG4bK74bf9;received=192.0.2.101
+  From: Juliet Capulet <sip:juliet@example.com>;tag=t3hr0zny
+  To: Romeo Montague <sip:romeo@example.net>;tag=v3rsch1kk3l1jk
+  Call-ID: 3848276298220188511@example.com
+  CSeq: 1 INVITE
+  Contact: <sip:romeo@client.example.net;transport=tcp>
+  Content-Type: application/sdp
+  Content-Length: 147
 
-     v=0
-     o=romeo 2890844527 2890844527 IN IP4 client.example.net
-     s=-
-     c=IN IP4 192.0.2.201
-     t=0 0
-     m=audio 3456 RTP/AVP 97
-     a=rtpmap:97 speex/8000
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                [Page 14]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
+  v=0
+  o=romeo 2890844527 2890844527 IN IP4 client.example.net
+  s=-
+  c=IN IP4 192.0.2.201
+  t=0 0
+  m=audio 3456 RTP/AVP 97
+  a=rtpmap:97 speex/8000
 
    The gateway transforms the 200 OK into a Jingle session-accept
    action.
 
-   <iq from='romeo@example.net/v3rsch1kk3l1jk'
-     id='pd1bf839'
-     to='juliet@example.com/t3hr0zny'
-     type='set'>
-   <jingle xmlns='urn:xmpp:jingle:1'
-           action='session-accept'
-           initiator='juliet@example.com/t3hr0zny'
-           responder='romeo@example.net/v3rsch1kk3l1jk'
-           sid='a73sjjvkla37jfea'>
-     <content creator='initiator'
-              media='audio'
-              name='this-is-the-audio-content'>
-       <description xmlns='urn:xmpp:jingle:app:rtp:1'>
-         <payload-type id='97' name='speex' clockrate='8000'/>
-       </description>
-       <transport xmlns='urn:xmpp:jingle:transport:raw-udp'>
-         <candidate ip='192.0.2.101' port='49172' generation='0'/>
-       </transport>
-     </content>
-   </jingle>
-   </iq>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                [Page 16]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
+
+     <iq from='romeo@example.net/v3rsch1kk3l1jk'
+       id='pd1bf839'
+       to='juliet@example.com/t3hr0zny'
+       type='set'>
+     <jingle xmlns='urn:xmpp:jingle:1'
+             action='session-accept'
+             initiator='juliet@example.com/t3hr0zny'
+             responder='romeo@example.net/v3rsch1kk3l1jk'
+             sid='a73sjjvkla37jfea'>
+       <content creator='initiator'
+                media='audio'
+                name='this-is-the-audio-content'>
+         <description xmlns='urn:xmpp:jingle:app:rtp:1'>
+           <payload-type id='97' name='speex' clockrate='8000'/>
+         </description>
+         <transport xmlns='urn:xmpp:jingle:transport:raw-udp'>
+           <candidate ip='192.0.2.101' port='49172' generation='0'/>
+         </transport>
+       </content>
+     </jingle>
+     </iq>
 
    If the payload types and transport candidate can be successfully used
    by both parties, then the initiator acknowledges the session-accept
    action.
 
-   <iq from='romeo@example.net/v3rsch1kk3l1jk'
-     id='pd1bf839'
-     to='juliet@example.com/t3hr0zny'
-     type='result'/>
+     <iq from='romeo@example.net/v3rsch1kk3l1jk'
+       id='pd1bf839'
+       to='juliet@example.com/t3hr0zny'
+       type='result'/>
 
    The parties now begin to exchange media.  In this case they would
    exchange audio using the Speex codec at a clockrate of 8000 since
@@ -830,80 +939,77 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
    Eventually, one of the parties (in this case the responder)
    terminates the session.
 
-   BYE sip:juliet@client.example.com SIP/2.0
-   Via: SIP/2.0/TCP client.example.net:5060;branch=z9hG4bKnashds7
-   Max-Forwards: 70
-   From: Romeo Montague <sip:romeo@example.net>;tag=8321234356
 
 
 
-Saint-Andre, et al.       Expires June 13, 2014                [Page 15]
+
+
+
+
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                [Page 17]
 
 Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
 
-   To: Juliet Capulet <sip:juliet@example.com>;tag=9fxced76sl
-   Call-ID: 3848276298220188511@example.com
-   CSeq: 1 BYE
-   Content-Length: 0
+     BYE sip:juliet@client.example.com SIP/2.0
+     Via: SIP/2.0/TCP client.example.net:5060;branch=z9hG4bKnashds7
+     Max-Forwards: 70
+     From: Romeo Montague <sip:romeo@example.net>;tag=8321234356
+     To: Juliet Capulet <sip:juliet@example.com>;tag=9fxced76sl
+     Call-ID: 3848276298220188511@example.com
+     CSeq: 1 BYE
+     Content-Length: 0
 
    The gateway transforms the SIP BYE into XMPP syntax.
 
-   <iq from='romeo@example.net/v3rsch1kk3l1jk'
-     id='rv301b47'
-     to='juliet@example.com/t3hr0zny'
-     type='set'>
-   <jingle xmlns='urn:xmpp:jingle:1'
-           action='session-terminate'
-           initiator='juliet@example.com/t3hr0zny'
-           reasoncode='no-error'
-           sid='a73sjjvkla37jfea'/>
-   </iq>
+     <iq from='romeo@example.net/v3rsch1kk3l1jk'
+       id='rv301b47'
+       to='juliet@example.com/t3hr0zny'
+       type='set'>
+     <jingle xmlns='urn:xmpp:jingle:1'
+             action='session-terminate'
+             initiator='juliet@example.com/t3hr0zny'
+             reasoncode='no-error'
+             sid='a73sjjvkla37jfea'/>
+     </iq>
 
    The initiator returns an IQ-result acknowledging receipt of the
    session termination, which is used only by the gateway and not
    transformed into SIP syntax.
 
-   <iq from='romeo@example.net/v3rsch1kk3l1jk'
-     id='rv301b47'
-     to='juliet@example.com/t3hr0zny'
-     type='result'/>
+     <iq from='romeo@example.net/v3rsch1kk3l1jk'
+       id='rv301b47'
+       to='juliet@example.com/t3hr0zny'
+       type='result'/>
 
 12.  Security Considerations
 
    Detailed security considerations for session management are given for
    SIP in [RFC3261] and for XMPP in [XEP-0166] (see also[RFC6120]).
 
-13.  Open Issues
-
-   o  Better text for OA compatibility section
-
-   o  Define how to handle session-info stanzas with 'active', 'hold'
-      and 'mute' elements.  Map that to SIP hold.
-
-   o  Translation of a=fmtp: SDP does not mandate to use a semicolon-
-      separated list of values.
-
-14.  IANA Considerations
+13.  IANA Considerations
 
    This document has no actions for the IANA.
 
-15.  References
+14.  References
 
-
-
-
-Saint-Andre, et al.       Expires June 13, 2014                [Page 16]
-
-Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
-
-
-15.1.  Normative References
+14.1.  Normative References
 
    [I-D.ietf-stox-core]
               Saint-Andre, P., Houri, A., and J. Hildebrand,
               "Interworking between the Session Initiation Protocol
               (SIP) and the Extensible Messaging and Presence Protocol
+
+
+
+Saint-Andre, et al.       Expires June 14, 2014                [Page 18]
+
+Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
+
+
               (XMPP): Core", draft-ietf-stox-core-00 (work in progress),
               July 2013.
 
@@ -919,6 +1025,10 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
               Video Conferences with Minimal Control", STD 65, RFC 3551,
               July 2003.
 
+   [RFC3711]  Baugher, M., McGrew, D., Naslund, M., Carrara, E., and K.
+              Norrman, "The Secure Real-time Transport Protocol (SRTP)",
+              RFC 3711, March 2004.
+
    [RFC4566]  Handley, M., Jacobson, V., and C. Perkins, "SDP: Session
               Description Protocol", RFC 4566, July 2006.
 
@@ -929,6 +1039,10 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
    [RFC6120]  Saint-Andre, P., "Extensible Messaging and Presence
               Protocol (XMPP): Core", RFC 6120, March 2011.
+
+   [XEP-0030]
+              Hildebrand, J., Eatmon, R., and P. Saint-Andre, "Service
+              Discovery", XSF XEP 0030, June 2008.
 
    [XEP-0166]
               Ludwig, S., Beda, J., Saint-Andre, P., McQueen, R., Egan,
@@ -947,9 +1061,7 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
 
 
-
-
-Saint-Andre, et al.       Expires June 13, 2014                [Page 17]
+Saint-Andre, et al.       Expires June 14, 2014                [Page 19]
 
 Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
@@ -962,7 +1074,7 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
               Cionoiu, D. and P. Saint-Andre, "Jingle Early Media", XSF
               XEP 0269, May 2009.
 
-15.2.  Informative References
+14.2.  Informative References
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
@@ -1005,7 +1117,7 @@ Authors' Addresses
 
 
 
-Saint-Andre, et al.       Expires June 13, 2014                [Page 18]
+Saint-Andre, et al.       Expires June 14, 2014                [Page 20]
 
 Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
@@ -1061,4 +1173,4 @@ Internet-Draft    SIP-XMPP Interworking: Media Sessions    December 2013
 
 
 
-Saint-Andre, et al.       Expires June 13, 2014                [Page 19]
+Saint-Andre, et al.       Expires June 14, 2014                [Page 21]

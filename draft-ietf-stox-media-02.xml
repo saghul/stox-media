@@ -529,6 +529,9 @@
         so that the following can be verified:
           jingleSessID == toJingleSessID(toSipCallID( jingleSessID ))
         are we doing that in some of the core specs]
+        TODO (saghul): we need to mention mention spirals here as well. Alice
+        could call Bob, but Bob forwards his call to Romeo. A spiral on the SIP
+        side could end up becoming a loop if the gateway is in between.
       </t>
     </section>
     <section title="SDP format specific parameters" anchor="fmtp">

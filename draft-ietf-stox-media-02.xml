@@ -914,20 +914,6 @@
       </t>
     </section>
 
-    <section title="Open Issues" anchor="open-issues">
-      <t>
-        <list style='symbols'>
-          <t>Better text for OA compatibility section</t>
-          <t>Define how to handle session-info stanzas with 'active',
-            'hold' and 'mute' elements. Map that to SIP hold.
-          </t>
-          <t>Translation of a=fmtp: SDP does not mandate to use a
-            semicolon-separated list of values.
-          </t>
-        </list>
-      </t>
-    </section>
-
     <section title='IANA Considerations' anchor="iana">
       <t>This document has no actions for the IANA.</t>
     </section>

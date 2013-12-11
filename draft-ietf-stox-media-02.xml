@@ -352,33 +352,18 @@
         </figure>
       </section>
 
-      <section title="Audio Application Format"
-               anchor="jingle-syntax-audio">
+      <section title="Application Formats"
+               anchor="jingle-syntax-application-formats">
         <t>
-          A Jingle application format for audio exchange via RTP is
-          specified in <xref target='XEP-0167'/>. This application
-          format effectively maps to the "RTP/AVP" profile specified
+          Jingle application formats for audio and video exchange via RTP are
+          specified in <xref target='XEP-0167'/>. These application
+          formats effectively maps to the "RTP/AVP" profile specified
           in <xref target='RFC3551'/> and the "RTP/SAVP" profile
-          specified in <xref target='RFC3711'/>, where the media type is "audio" and
-          the specific mappings to SDP syntax are provided in
-          <xref target='XEP-0167'/>. As stated in
-          <xref target='XEP-0167'/> future versions of this
-          specification might define how to use other RTP profiles
-          such as "RTP/AVPF" and "RTP/SAVPF" as defined in RFC4585 and
-          RFC5124 respectively.
+          specified in <xref target='RFC3711'/>, where the media types are "audio" and
+          "video", and the specific mappings to SDP syntax are provided in
+          <xref target='XEP-0167'/>.
         </t>
-      </section>
-
-      <section title="Video Application Format"
-               anchor="jingle-syntax-video">
-        <t>
-          A Jingle application format for video exchange via RTP is
-          specified in <xref target='XEP-0167'/>. This application
-          format effectively maps to the "RTP/AVP" profile specified
-          in <xref target='RFC3551'/> and the "RTP/SAVP" profile
-          specified in <xref target='RFC3711'/>, where the media type is "audio" and
-          the specific mappings to SDP syntax are provided in
-          <xref target='XEP-0167'/>. As stated in
+        <t>As stated in
           <xref target='XEP-0167'/> future versions of this
           specification might define how to use other RTP profiles
           such as "RTP/AVPF" and "RTP/SAVPF" as defined in RFC4585 and

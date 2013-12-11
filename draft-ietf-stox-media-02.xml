@@ -616,6 +616,12 @@
         stage, which of the dialogs established by these provisional
         responses will be used for the actual session.
       </t>
+      <t>
+        Likewise, gateways conforming to this specification MUST NOT forward
+        more than a single final response received through SIP to the Jingle side.
+        The gateway SHOULD terminate the SIP sessions whose received final response
+        wasn't forwarded to the Jingle side.
+      </t>
     </section>
 
     <section title="Sample Scenarios" anchor="jingle-scenarios">

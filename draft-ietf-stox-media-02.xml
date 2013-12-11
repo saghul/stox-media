@@ -359,7 +359,7 @@
           specified in <xref target='XEP-0167'/>. This application
           format effectively maps to the "RTP/AVP" profile specified
           in <xref target='RFC3551'/> and the "RTP/SAVP" profile
-          specified in RFC3711, where the media type is "audio" and
+          specified in <xref target='RFC3711'/>, where the media type is "audio" and
           the specific mappings to SDP syntax are provided in
           <xref target='XEP-0167'/>. As stated in
           <xref target='XEP-0167'/> future versions of this
@@ -376,7 +376,7 @@
           specified in <xref target='XEP-0167'/>. This application
           format effectively maps to the "RTP/AVP" profile specified
           in <xref target='RFC3551'/> and the "RTP/SAVP" profile
-          specified in RFC3711, where the media type is "audio" and
+          specified in <xref target='RFC3711'/>, where the media type is "audio" and
           the specific mappings to SDP syntax are provided in
           <xref target='XEP-0167'/>. As stated in
           <xref target='XEP-0167'/> future versions of this
@@ -1089,6 +1089,32 @@
         <format type='TXT' octets='106621' target='ftp://ftp.isi.edu/in-notes/rfc3551.txt'/>
         <format type='PS' octets='317286' target='ftp://ftp.isi.edu/in-notes/rfc3551.ps'/>
         <format type='PDF' octets='237831' target='ftp://ftp.isi.edu/in-notes/rfc3551.pdf'/>
+      </reference>
+
+      <reference anchor='RFC3711'>
+          <front>
+              <title>The Secure Real-time Transport Protocol (SRTP)</title>
+              <author initials='M.' surname='Baugher' fullname='M. Baugher'>
+                  <organization /></author>
+              <author initials='D.' surname='McGrew' fullname='D. McGrew'>
+                  <organization /></author>
+              <author initials='M.' surname='Naslund' fullname='M. Naslund'>
+                  <organization /></author>
+              <author initials='E.' surname='Carrara' fullname='E. Carrara'>
+                  <organization /></author>
+              <author initials='K.' surname='Norrman' fullname='K. Norrman'>
+                  <organization /></author>
+              <date year='2004' month='March' />
+              <abstract>
+                  <t>This document describes the Secure Real-time Transport Protocol (SRTP), a profile of
+                      the Real-time Transport Protocol (RTP), which can provide confidentiality, message
+                      authentication, and replay protection to the RTP traffic and to the control traffic
+                      for RTP, the Real-time Transport Control Protocol (RTCP). [STANDARDS-TRACK]
+                  </t>
+              </abstract>
+          </front>
+          <seriesInfo name='RFC' value='3711' />
+          <format type='TXT' octets='134270' target='http://www.rfc-editor.org/rfc/rfc3711.txt' />
       </reference>
 
       <reference anchor='RFC4566'>

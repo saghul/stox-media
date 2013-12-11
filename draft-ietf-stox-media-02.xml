@@ -444,10 +444,16 @@
         The same semantics are also supported by Jingle through the
         "senders" element and its "initiator" and "responder" values.
       </t>
+        <figure>
+          <artwork><![CDATA[
+              TODO
+          ]]></artwork>
+        </figure>
       <t>
         In addition to these semantics however Jingle also defines a
         more concise way for achieving the same, which consists in
         sending a "hold" command within a "session-info" action:
+      </t>
         <figure>
           <artwork><![CDATA[
 <iq from='juliet@capulet.lit/balcony'
@@ -463,7 +469,6 @@
 </iq>
           ]]></artwork>
         </figure>
-      </t>
       <t>
         Gateways that receive a "hold" command from their Jingle side
         MUST generate a new offer on their SIP side, placing all streams

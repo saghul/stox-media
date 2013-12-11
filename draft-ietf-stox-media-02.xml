@@ -118,7 +118,7 @@
         handling handling RTP session establishment and control within
         the context of what users would perceive as "calls". This
         document is hence primarily dealing with calling scenarios as
-        opposed to generic media transfer with SIP.
+        opposed to generic media sessions with SIP.
       </t>
       <t>
         The discussion venue for this document is the mailing list of
